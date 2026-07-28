@@ -1,0 +1,44 @@
+rosbag2_bagfile_information:
+  version: 9
+  storage_identifier: mcap
+  duration:
+    nanoseconds: 51176678594
+  starting_time:
+    nanoseconds_since_epoch: 1784060712675532696
+  message_count: 512
+  topics_with_message_count:
+    - topic_metadata:
+        name: /arena/tags
+        type: std_msgs/msg/String
+        serialization_format: cdr
+        offered_qos_profiles:
+          - history: unknown
+            depth: 0
+            reliability: reliable
+            durability: volatile
+            deadline:
+              sec: 9223372036
+              nsec: 854775807
+            lifespan:
+              sec: 9223372036
+              nsec: 854775807
+            liveliness: automatic
+            liveliness_lease_duration:
+              sec: 9223372036
+              nsec: 854775807
+            avoid_ros_namespace_conventions: false
+        type_description_hash: RIHS01_df668c740482bbd48fb39d76a70dfd4bd59db1288021743503259e948f6b1a18
+      message_count: 512
+  compression_format: ""
+  compression_mode: ""
+  relative_file_paths:
+    - rosbag2_2026_07_14-16_25_12_0.mcap
+  files:
+    - path: rosbag2_2026_07_14-16_25_12_0.mcap
+      starting_time:
+        nanoseconds_since_epoch: 1784060712675532696
+      duration:
+        nanoseconds: 51176678594
+      message_count: 512
+  custom_data: ~
+  ros_distro: jazzy
