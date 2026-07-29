@@ -1,0 +1,256 @@
+import asyncio
+import threading
+
+
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+from bleak import BleakClient, BleakScanner
+
+
+
+
+class Robot1ControllerNode(Node):
+
+
+   def __init__(self):
+       super().__init__("robot_1_node")
+
+
+       self.subscription = self.create_subscription(
+           Twist,
+           "/robot_1/cmd_vel",
+           self.cmd_vel_callback,
+           10
+       )
+
+
+       # Must match NimBLEDevice::init() in the ESP32 sketch
+       self.device_name = "XIAO-C3-Robot"
+
+
+       # Must match CHARACTERISTIC_UUID in the ESP32 sketch
+       self.characteristic_uuid = (
+           "beb5483e-36e1-4688-b7f5-ea07361b26a8"
+       )
+
+
+       self.client = None
+       self.last_command = None
+       self.running = True
+
+
+       # Run asyncio/BLE in a background thread.
+       self.ble_loop = asyncio.new_event_loop()
+       self.ble_thread = threading.Thread(
+           target=self.run_ble_loop,
+           daemon=True
+       )
+       self.ble_thread.start()
+
+
+       asyncio.run_coroutine_threadsafe(
+           self.connection_manager(),
+           self.ble_loop
+       )
+
+
+       self.get_logger().info(
+           f"Searching for BLE robot: {self.device_name}"
+       )
+
+
+   def run_ble_loop(self):
+       asyncio.set_event_loop(self.ble_loop)
+       self.ble_loop.run_forever()
+
+
+   async def connection_manager(self):
+       """Continuously connect or reconnect to the robot."""
+       while self.running:
+           try:
+               if self.client and self.client.is_connected:
+                   await asyncio.sleep(1.0)
+                   continue
+
+
+               self.get_logger().info(
+                   f"Scanning for {self.device_name}..."
+               )
+
+
+               device = await BleakScanner.find_device_by_name(
+                   self.device_name,
+                   timeout=10.0
+               )
+
+
+               if device is None:
+                   self.get_logger().warning(
+                       f"{self.device_name} was not found. Retrying..."
+                   )
+                   await asyncio.sleep(3.0)
+                   continue
+
+
+               self.get_logger().info(
+                   f"Found {device.name} at {device.address}"
+               )
+
+
+               self.client = BleakClient(
+                   device,
+                   disconnected_callback=self.disconnected_callback
+               )
+
+
+               await self.client.connect()
+
+
+               self.get_logger().info(
+                   f"Connected to {self.device_name}"
+               )
+
+
+               # Make sure the motors begin stopped.
+               await self.write_command("S")
+
+
+           except Exception as error:
+               self.get_logger().error(
+                   f"BLE connection error: {error}"
+               )
+               self.client = None
+               await asyncio.sleep(3.0)
+
+
+   def disconnected_callback(self, client):
+       self.get_logger().warning(
+           f"Disconnected from {self.device_name}"
+       )
+       self.client = None
+       self.last_command = None
+
+
+   def cmd_vel_callback(self, msg: Twist):
+       """Convert ROS Twist velocities into ESP32 commands."""
+       linear_x = msg.linear.x
+       angular_z = msg.angular.z
+
+
+       # Linear motion is given priority.
+       if linear_x > 0.1:
+           command = "F"
+       elif linear_x < -0.1:
+           command = "B"
+       elif angular_z > 0.1:
+           command = "L"
+       elif angular_z < -0.1:
+           command = "R"
+       else:
+           command = "S"
+
+
+       # Do not repeatedly send the same command.
+       if command == self.last_command:
+           return
+
+
+       self.last_command = command
+
+
+       asyncio.run_coroutine_threadsafe(
+           self.write_command(command),
+           self.ble_loop
+       )
+
+
+   async def write_command(self, command):
+       """Send one command character to the ESP32."""
+       if self.client is None or not self.client.is_connected:
+           self.get_logger().warning(
+               f"Cannot send '{command}': robot is disconnected"
+           )
+           return
+
+
+       try:
+           await self.client.write_gatt_char(
+               self.characteristic_uuid,
+               command.encode("utf-8"),
+               response=True
+           )
+
+
+           self.get_logger().info(
+               f"Sent command: {command}"
+           )
+
+
+       except Exception as error:
+           self.get_logger().error(
+               f"Failed to send '{command}': {error}"
+           )
+           self.last_command = None
+
+
+   def destroy_node(self):
+       self.running = False
+
+
+       if self.client and self.client.is_connected:
+           # Stop the motors before disconnecting.
+           stop_future = asyncio.run_coroutine_threadsafe(
+               self.write_command("S"),
+               self.ble_loop
+           )
+
+
+           try:
+               stop_future.result(timeout=2.0)
+           except Exception:
+               pass
+
+
+           disconnect_future = asyncio.run_coroutine_threadsafe(
+               self.client.disconnect(),
+               self.ble_loop
+           )
+
+
+           try:
+               disconnect_future.result(timeout=3.0)
+           except Exception:
+               pass
+
+
+       self.ble_loop.call_soon_threadsafe(self.ble_loop.stop)
+       self.ble_thread.join(timeout=3.0)
+
+
+       super().destroy_node()
+
+
+
+
+def main(args=None):
+   rclpy.init(args=args)
+   node = Robot1ControllerNode()
+
+
+   try:
+       rclpy.spin(node)
+   except KeyboardInterrupt:
+       pass
+   finally:
+       node.destroy_node()
+
+
+       if rclpy.ok():
+           rclpy.shutdown()
+
+
+
+
+if __name__ == "__main__":
+   main()
