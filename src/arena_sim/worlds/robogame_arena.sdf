@@ -1,0 +1,368 @@
+<?xml version="1.0" ?>
+
+<sdf version="1.9">
+  <world name="robogame_arena">
+
+    <gravity>0 0 -9.81</gravity>
+
+    <physics name="arena_physics" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <plugin
+      filename="gz-sim-physics-system"
+      name="gz::sim::systems::Physics"/>
+
+    <plugin
+      filename="gz-sim-user-commands-system"
+      name="gz::sim::systems::UserCommands"/>
+
+    <plugin
+      filename="gz-sim-scene-broadcaster-system"
+      name="gz::sim::systems::SceneBroadcaster"/>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+
+
+
+    <model name="north_wall">
+      <static>true</static>
+      <pose>0 0.51 0.04 0 0 0</pose>
+
+      <link name="wall_link">
+
+        <collision name="wall_collision">
+          <geometry>
+            <box>
+              <size>1.04 0.02 0.08</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="wall_visual">
+          <geometry>
+            <box>
+              <size>1.04 0.02 0.08</size>
+            </box>
+          </geometry>
+
+          <material>
+            <ambient>0.15 0.25 0.80 1</ambient>
+            <diffuse>0.20 0.35 0.90 1</diffuse>
+            <specular>0.10 0.10 0.10 1</specular>
+          </material>
+        </visual>
+
+      </link>
+    </model>
+
+
+
+     <model name="south_wall">
+      <static>true</static>
+      <pose>0 -0.51 0.04 0 0 0</pose>
+
+      <link name="wall_link">
+
+        <collision name="wall_collision">
+          <geometry>
+            <box>
+              <size>1.04 0.02 0.08</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="wall_visual">
+          <geometry>
+            <box>
+              <size>1.04 0.02 0.08</size>
+            </box>
+          </geometry>
+
+          <material>
+            <ambient>0.15 0.25 0.80 1</ambient>
+            <diffuse>0.20 0.35 0.90 1</diffuse>
+            <specular>0.10 0.10 0.10 1</specular>
+          </material>
+        </visual>
+
+      </link>
+    </model>
+
+
+
+
+        <model name="east_wall">
+      <static>true</static>
+      <pose>0.51 0 0.04 0 0 0</pose>
+
+      <link name="wall_link">
+
+        <collision name="wall_collision">
+          <geometry>
+            <box>
+              <size>0.02 1.00 0.08</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="wall_visual">
+          <geometry>
+            <box>
+              <size>0.02 1.00 0.08</size>
+            </box>
+          </geometry>
+
+          <material>
+            <ambient>0.15 0.25 0.80 1</ambient>
+            <diffuse>0.20 0.35 0.90 1</diffuse>
+            <specular>0.10 0.10 0.10 1</specular>
+          </material>
+        </visual>
+
+      </link>
+    </model>
+
+
+    <model name="west_wall">
+      <static>true</static>
+      <pose>-0.51 0 0.04 0 0 0</pose>
+
+      <link name="wall_link">
+
+        <collision name="wall_collision">
+          <geometry>
+            <box>
+              <size>0.02 1.00 0.08</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="wall_visual">
+          <geometry>
+            <box>
+              <size>0.02 1.00 0.08</size>
+            </box>
+          </geometry>
+
+          <material>
+            <ambient>0.15 0.25 0.80 1</ambient>
+            <diffuse>0.20 0.35 0.90 1</diffuse>
+            <specular>0.10 0.10 0.10 1</specular>
+          </material>
+        </visual>
+
+      </link>
+    </model>
+
+
+
+
+
+
+
+
+    <model name="arena_floor">
+      <static>true</static>
+      <pose>0 0 -0.01 0 0 0</pose>
+
+      <link name="floor_link">
+
+        <collision name="floor_collision">
+          <geometry>
+            <box>
+              <size>1.2 1.2 0.02</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="floor_visual">
+          <geometry>
+            <box>
+              <size>1.2 1.2 0.02</size>
+            </box>
+          </geometry>
+
+          <material>
+            <ambient>0.65 0.65 0.65 1</ambient>
+            <diffuse>0.75 0.75 0.75 1</diffuse>
+            <specular>0.1 0.1 0.1 1</specular>
+          </material>
+        </visual>
+
+      </link>
+    </model>
+
+
+
+
+        <model name="x_axis_marker">
+      <static>true</static>
+
+      <pose>0 0 0.001 0 0 0</pose>
+
+      <link name="x_axis_link">
+        <visual name="x_axis_visual">
+          <geometry>
+            <box>
+              <size>1.00 0.005 0.002</size>
+            </box>
+          </geometry>
+
+          <material>
+            <ambient>1 0 0 1</ambient>
+            <diffuse>1 0 0 1</diffuse>
+            <specular>0.1 0.1 0.1 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+
+
+        <model name="y_axis_marker">
+      <static>true</static>
+
+      <pose>0 0 0.0015 0 0 0</pose>
+
+      <link name="y_axis_link">
+        <visual name="y_axis_visual">
+          <geometry>
+            <box>
+              <size>0.005 1.00 0.003</size>
+            </box>
+          </geometry>
+
+          <material>
+            <ambient>0 1 0 1</ambient>
+            <diffuse>0 1 0 1</diffuse>
+            <specular>0.1 0.1 0.1 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+        <model name="origin_marker">
+      <static>true</static>
+
+      <pose>0 0 0.003 0 0 0</pose>
+
+      <link name="origin_link">
+        <visual name="origin_visual">
+          <geometry>
+            <cylinder>
+              <radius>0.012</radius>
+              <length>0.006</length>
+            </cylinder>
+          </geometry>
+
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0.1 0.1 0.1 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+
+
+        <model name="waypoint_1">
+      <static>true</static>
+
+      <pose>0.5 0.5 0.2 0 0 0</pose>
+
+      <link name="waypoint_link">
+        <visual name="waypoint_visual">
+          <geometry>
+            <cylinder>
+              <radius>0.035</radius>
+              <length>0.004</length>
+            </cylinder>
+          </geometry>
+
+          <material>
+            <ambient>1 0.65 0 1</ambient>
+            <diffuse>1 0.65 0 1</diffuse>
+            <specular>0.2 0.2 0.2 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+
+    <!-- tokens -->
+    <!-- Test token -->
+<model name="token_1">
+  <!-- x, y, z, roll, pitch, yaw -->
+  <pose>0.1 0.3 0.03 0 0 0</pose>
+
+  <link name="token_link">
+    <inertial>
+      <mass>0.03</mass>
+      <inertia>
+        <ixx>0.00005025</ixx>
+        <iyy>0.00005025</iyy>
+        <izz>0.000096</izz>
+      </inertia>
+    </inertial>
+
+    <collision name="token_collision">
+      <geometry>
+        <cylinder>
+          <radius>0.01</radius>
+          <length>0.01</length>
+        </cylinder>
+      </geometry>
+
+      <surface>
+        <friction>
+          <ode>
+            <mu>0.8</mu>
+            <mu2>0.8</mu2>
+          </ode>---------------------------------------------------
+        </friction>
+      </surface>
+    </collision>
+
+    <visual name="token_visual">
+      <geometry>
+        <cylinder>
+          <radius>0.01</radius>
+          <length>0.01</length>
+        </cylinder>
+      </geometry>
+
+      <material>
+        <ambient>0.1 0.2 1.0 1</ambient>
+        <diffuse>0.1 0.2 1.0 1</diffuse>
+        <specular>0.3 0.3 0.3 1</specular>
+      </material>
+    </visual>
+  </link>
+</model>
+
+
+
+
+
+
+---------------------------------------------------
+
+
+    <include>
+      <uri>model://robot_1</uri>
+      <name>robot_1</name>
+      <pose>-0.30 -0.30 0.035 0 0 0</pose>
+    </include>
+
+  </world>
+</sdf>

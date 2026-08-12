@@ -1,0 +1,505 @@
+<?xml version="1.0" ?>
+
+<sdf version="1.9">
+  <model name="robot_1">
+
+    <!-- Chassis -->
+    <link name="chassis">
+      <inertial>
+        <mass>0.5</mass>
+
+        <inertia>
+          <ixx>0.000152</ixx>
+          <iyy>0.000227</iyy>
+          <izz>0.000342</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+
+      <collision name="chassis_collision">
+        <geometry>
+          <box>
+            <size>0.08 0.05 0.03</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <visual name="chassis_visual">
+        <geometry>
+          <box>
+            <size>0.08 0.05 0.03</size>
+          </box>
+        </geometry>
+
+        <material>
+          <ambient>0.8 0.1 0.1 1</ambient>
+          <diffuse>0.9 0.15 0.15 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+    </link>
+
+
+
+    <!-- Front lifting arm -->
+<link name="lifting_arm">
+  <!-- Hinge located at the front face of the chassis -->
+  <pose>0.04 0 0.005 0 0 0</pose>
+
+  <inertial>
+    <pose>0.03 0 0 0 0 0</pose>
+
+    <mass>0.02</mass>
+
+    <inertia>
+      <ixx>0.000000273</ixx>
+      <iyy>0.000006107</iyy>
+      <izz>0.000006167</izz>
+      <ixy>0</ixy>
+      <ixz>0</ixz>
+      <iyz>0</iyz>
+    </inertia>
+  </inertial>
+
+  <collision name="lifting_arm_collision">
+    <!-- Offset makes the arm extend forward from the hinge -->
+    <pose>0.03 0 0 0 0 0</pose>
+
+    <geometry>
+      <box>
+        <size>0.06 0.01 0.008</size>
+      </box>
+    </geometry>
+  </collision>
+
+  <visual name="lifting_arm_visual">
+    <pose>0.03 0 0 0 0 0</pose>
+
+    <geometry>
+      <box>
+        <size>0.06 0.01 0.008</size>
+      </box>
+    </geometry>
+
+    <material>
+      <ambient>0.1 0.3 0.8 1</ambient>
+      <diffuse>0.1 0.4 0.9 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+    </material>
+  </visual>
+</link>
+
+
+    <!-- Right wheelfront -->
+    <link name="right_wheel_front">
+      <pose>0.03 -0.03 0 1.5708 0 0</pose>
+
+      <inertial>
+        <mass>0.02</mass>
+
+        <inertia>
+          <ixx>0.00000202</ixx>
+          <iyy>0.00000400</iyy>
+          <izz>0.00000202</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+
+      <collision name="right_wheel_front_collision">
+        <geometry>
+          <cylinder>
+            <radius>0.02</radius>
+            <length>0.01</length>
+          </cylinder>
+        </geometry>
+
+        <surface>
+          <friction>
+            <ode>
+              <!-- Friction sideways, along the wheel axle -->
+              <mu>0.1</mu>
+
+              <!-- Traction in the rolling direction -->
+              <mu2>0.90</mu2>
+
+              <!-- Wheel-local Z axis defines the mu direction -->
+              <fdir1>0 0 1</fdir1>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <visual name="right_wheel_front_visual">
+        <geometry>
+          <cylinder>
+            <radius>0.02</radius>
+            <length>0.01</length>
+          </cylinder>
+        </geometry>
+
+        <material>
+          <ambient>0.03 0.03 0.03 1</ambient>
+          <diffuse>0.08 0.08 0.08 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+    </link>
+
+
+    <!-- Left wheel front -->
+    <link name="left_wheel_front">
+      <pose>0.03 0.03 0 1.5708 0 0</pose>
+
+      <inertial>
+        <mass>0.02</mass>
+
+        <inertia>
+          <ixx>0.00000202</ixx>
+          <iyy>0.00000400</iyy>
+          <izz>0.00000202</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+
+      <collision name="left_wheel_front_collision">
+        <geometry>
+          <cylinder>
+            <radius>0.02</radius>
+            <length>0.01</length>
+          </cylinder>
+        </geometry>
+
+        <surface>
+          <friction>
+            <ode>
+              <!-- Friction sideways, along the wheel axle -->
+              <mu>0.1</mu>
+
+              <!-- Traction in the rolling direction -->
+              <mu2>0.90</mu2>
+
+              <!-- Wheel-local Z axis defines the mu direction -->
+              <fdir1>0 0 1</fdir1>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <visual name="left_wheel_front_visual">
+        <geometry>
+          <cylinder>
+            <radius>0.02</radius>
+            <length>0.01</length>
+          </cylinder>
+        </geometry>
+
+        <material>
+          <ambient>0.03 0.03 0.03 1</ambient>
+          <diffuse>0.08 0.08 0.08 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+    </link>
+
+
+
+    <!-- Left wheel front -->
+    <link name="left_wheel_rear">
+      <pose>-0.03 0.03 0 1.5708 0 0</pose>
+
+      <inertial>
+        <mass>0.02</mass>
+
+        <inertia>
+          <ixx>0.00000202</ixx>
+          <iyy>0.00000400</iyy>
+          <izz>0.00000202</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+
+      <collision name="left_wheel_rear_collision">
+        <geometry>
+          <cylinder>
+            <radius>0.02</radius>
+            <length>0.01</length>
+          </cylinder>
+        </geometry>
+
+        <surface>
+          <friction>
+            <ode>
+              <!-- Friction sideways, along the wheel axle -->
+              <mu>0.1</mu>
+
+              <!-- Traction in the rolling direction -->
+              <mu2>0.90</mu2>
+
+              <!-- Wheel-local Z axis defines the mu direction -->
+              <fdir1>0 0 1</fdir1>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <visual name="left_wheel_rear_visual">
+        <geometry>
+          <cylinder>
+            <radius>0.02</radius>
+            <length>0.01</length>
+          </cylinder>
+        </geometry>
+
+        <material>
+          <ambient>0.03 0.03 0.03 1</ambient>
+          <diffuse>0.08 0.08 0.08 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+    </link>
+
+
+
+  <!-- Right wheel rear -->
+    <link name="right_wheel_rear">
+      <pose>-0.03 -0.03 0 1.5708 0 0</pose>
+
+      <inertial>
+        <mass>0.02</mass>
+
+        <inertia>
+          <ixx>0.00000202</ixx>
+          <iyy>0.00000400</iyy>
+          <izz>0.00000202</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+
+      <collision name="right_wheel_rear_collision">
+        <geometry>
+          <cylinder>
+            <radius>0.02</radius>
+            <length>0.01</length>
+          </cylinder>
+        </geometry>
+
+        <surface>
+          <friction>
+            <ode>
+            <!-- Friction sideways, along the wheel axle -->
+            <mu>0.1</mu>
+
+            <!-- Traction in the rolling direction -->
+            <mu2>0.90</mu2>
+
+            <!-- Wheel-local Z axis defines the mu direction -->
+            <fdir1>0 0 1</fdir1>
+          </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <visual name="right_wheel_rear_visual">
+        <geometry>
+          <cylinder>
+            <radius>0.02</radius>
+            <length>0.01</length>
+          </cylinder>
+        </geometry>
+
+        <material>
+          <ambient>0.03 0.03 0.03 1</ambient>
+          <diffuse>0.08 0.08 0.08 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+    </link>
+
+    
+
+
+    <! --- JOINTS --- >
+
+
+    <!-- Front arm hinge -->
+<joint name="lifting_arm_joint" type="revolute">
+  <parent>chassis</parent>
+  <child>lifting_arm</child>
+
+  <!-- Negative Y makes positive joint angles lift the arm -->
+  <axis>
+    <xyz>0 -1 0</xyz>
+
+    <limit>
+      <!-- Horizontal/down position -->
+      <lower>0.0</lower>
+
+      <!-- Approximately 69 degrees raised -->
+      <upper>1.2</upper>
+
+      <effort>0.05</effort>
+      <velocity>2.0</velocity>
+    </limit>
+
+    <dynamics>
+      <damping>0.02</damping>
+      <friction>0.001</friction>
+    </dynamics>
+  </axis>
+</joint>
+
+
+    <joint name="left_wheel_front_joint" type="revolute">
+      <parent>chassis</parent>
+      <child>left_wheel_front</child>
+
+      <axis>
+        <xyz>0 0 -1</xyz>
+
+        <limit>
+          <lower>-1.0e16</lower>
+          <upper>1.0e16</upper>
+          <effort>2.0</effort>
+          <velocity>30.0</velocity>
+        </limit>
+
+        <dynamics>
+          <damping>0.01</damping>
+          <friction>0.0</friction>
+        </dynamics>
+      </axis>
+    </joint>
+
+
+
+    <joint name="right_wheel_front_joint" type="revolute">
+      <parent>chassis</parent>
+      <child>right_wheel_front</child>
+
+      <axis>
+        <xyz>0 0 -1</xyz>
+
+        <limit>
+          <lower>-1.0e16</lower>
+          <upper>1.0e16</upper>
+          <effort>2.0</effort>
+          <velocity>30.0</velocity>
+        </limit>
+
+        <dynamics>
+          <damping>0.01</damping>
+          <friction>0.0</friction>
+        </dynamics>
+      </axis>
+    </joint>
+
+
+
+    <joint name="left_wheel_rear_joint" type="revolute">
+      <parent>chassis</parent>
+      <child>left_wheel_rear</child>
+
+      <axis>
+        <xyz>0 0 -1</xyz>
+
+        <limit>
+          <lower>-1.0e16</lower>
+          <upper>1.0e16</upper>
+          <effort>2.0</effort>
+          <velocity>30.0</velocity>
+        </limit>
+
+        <dynamics>
+          <damping>0.01</damping>
+          <friction>0.0</friction>
+        </dynamics>
+      </axis>
+    </joint>
+
+
+
+    <joint name="right_wheel_rear_joint" type="revolute">
+      <parent>chassis</parent>
+      <child>right_wheel_rear</child>
+
+      <axis>
+        <xyz>0 0 -1</xyz>
+        <limit>
+          <lower>-1.0e16</lower>
+          <upper>1.0e16</upper>
+          <effort>2.0</effort>
+          <velocity>30.0</velocity>
+        </limit>
+
+        <dynamics>
+          <damping>0.01</damping>
+          <friction>0.0</friction>
+        </dynamics>
+      </axis>
+    </joint>
+
+
+
+
+
+
+
+
+
+    <!-- Four-wheel differential-drive controller -->
+<plugin
+  filename="gz-sim-diff-drive-system"
+  name="gz::sim::systems::DiffDrive">
+
+  <!-- Left-side wheels -->
+  <left_joint>left_wheel_front_joint</left_joint>
+  <left_joint>left_wheel_rear_joint</left_joint>
+
+  <!-- Right-side wheels -->
+  <right_joint>right_wheel_front_joint</right_joint>
+  <right_joint>right_wheel_rear_joint</right_joint>
+
+  <!-- Distance from y = +0.03 to y = -0.03 -->
+  <wheel_separation>0.06</wheel_separation>
+
+  <!-- Your wheel radius -->
+  <wheel_radius>0.02</wheel_radius>
+
+  <odom_publish_frequency>30</odom_publish_frequency>
+
+  <!-- Gazebo command topic -->
+  <topic>/robot_1/cmd_vel</topic>
+
+</plugin>
+
+<!-- Lifting-arm position controller -->
+<plugin
+  filename="gz-sim-joint-position-controller-system"
+  name="gz::sim::systems::JointPositionController">
+
+  <joint_name>lifting_arm_joint</joint_name>
+  <topic>/robot_1/arm_position</topic>
+
+  <initial_position>0.0</initial_position>
+
+  <p_gain>1.0</p_gain>
+  <i_gain>0.0</i_gain>
+  <d_gain>0.02</d_gain>
+
+  <!-- Maximum controller torque -->
+  <cmd_max>0.05</cmd_max>
+  <cmd_min>-0.05</cmd_min>
+</plugin>
+
+  </model>
+</sdf>

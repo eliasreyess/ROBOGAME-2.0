@@ -29,6 +29,7 @@ setup(
             'camera_test = arena_perception.camera_test:main',
             'gazebo_viz_node = arena_perception.gazebo_viz_node:main',
             'controller_input = arena_perception.controller_input:main',
+            'autonomy_node = arena_perception.autonomy_node:main',
         ],
     },
 )
