@@ -1,0 +1,168 @@
+<!-- RoboGame 2.0 Portfolio Entry -->
+<section id="robogame" class="project-section">
+
+  <header class="project-header">
+    <h1>RoboGame 2.0: ROS 2 Autonomy and Digital Twin</h1>
+    <p class="project-subtitle">
+      Modernizing a multi-robot game arena with ROS 2, Gazebo simulation,
+      teleoperation, and autonomous token collection.
+    </p>
+
+    <p>
+      <strong>Role:</strong> Robotics Software Developer<br>
+      <strong>Tools:</strong> ROS 2 Jazzy, Gazebo, Python, OpenCV,
+      Raspberry Pi, ESP32, Bluetooth, and PS4 Controller
+    </p>
+  </header>
+
+  <hr>
+
+  <h2>Project Overview</h2>
+
+  <p>
+    RoboGame is a multi-robot arena in which mobile robots locate, collect,
+    and transport colored tokens. The original system used a tightly
+    interconnected Python codebase that was difficult to debug, simulate,
+    and expand. Our team modernized the platform by developing a modular
+    ROS 2 architecture, a Gazebo digital twin, and a foundation for
+    autonomous token collection.
+  </p>
+
+  <!-- Replace the filename with your architecture image -->
+  <figure>
+    <img
+      src="assets/robogameschematic.png"
+      alt="ROS 2 architecture connecting perception, controller input, autonomy, simulation, and the physical robot"
+      style="display: block; width: 25%; max-width: 900px; height: auto; margin: auto;"
+    >
+    <figcaption style="text-align: center;">
+      Fig. 1. Modular ROS 2 architecture developed for the RoboGame platform.
+    </figcaption>
+  </figure>
+
+  <h2>Key Contributions</h2>
+
+  <ul>
+    <li>
+      Reorganized the system into reusable ROS 2 nodes for perception,
+      controller input, autonomous control, and physical robot communication.
+    </li>
+    <li>
+      Developed a Gazebo digital twin containing a differential-drive robot,
+      tokens, a movable collection arm, and simulated magnetic attachment.
+    </li>
+    <li>
+      Implemented standard ROS control interfaces, including
+      <code>/cmd_vel</code>, so the same commands could be used with simulated
+      and physical robots.
+    </li>
+    <li>
+      Added PS4 controller teleoperation for robot driving, arm positioning,
+      and magnetic token pickup and release.
+    </li>
+    <li>
+      Integrated robot and token odometry to support target tracking and
+      autonomous navigation.
+    </li>
+    <li>
+      Developed autonomous behaviors for closest-token selection, navigation
+      toward the selected token, and proximity-based pickup using a 5 cm
+      attachment constraint.
+    </li>
+    <li>
+      Established ROS 2 communication with a physical robot through a
+      Raspberry Pi, Bluetooth, and an ESP32 motor controller.
+    </li>
+    <li>
+      Created project documentation and beginner-oriented ROS 2 instructions
+      to help future teams operate and extend the platform.
+    </li>
+  </ul>
+
+  <h2>Gazebo Digital Twin</h2>
+
+  <p>
+    The Gazebo environment models the physical RoboGame arena and reproduces
+    the robot's differential-drive motion, collection arm, and magnetic pickup
+    mechanism. Robot and token odometry are published through ROS 2 and used by
+    the autonomy node for navigation and pickup decisions.
+  </p>
+
+  <!-- Replace the filename with your Gazebo screenshot -->
+  <figure>
+    <img
+      src="assets/gazebo.png"
+      alt="RoboGame robot and colored tokens inside the Gazebo simulation arena"
+      style="display: block; width: 25%; max-width: 850px; height: auto; margin: auto;"
+    >
+    <figcaption style="text-align: center;">
+      Fig. 2. Gazebo digital twin used to test robot control and token pickup.
+    </figcaption>
+  </figure>
+
+  <h2>Control and Autonomy Pipeline</h2>
+
+  <p>
+    The autonomy node receives robot and token position data, calculates the
+    distance and heading to each token, selects the closest target, and
+    publishes velocity commands to the robot. Once the robot is within 5 cm
+    of the target, the system can lower the arm and activate the simulated
+    magnetic attachment.
+  </p>
+
+  <ol>
+    <li>Receive robot and token odometry.</li>
+    <li>Calculate the distance to each token.</li>
+    <li>Select the closest available token.</li>
+    <li>Rotate toward and navigate to the target.</li>
+    <li>Verify that the token is within the 5 cm pickup range.</li>
+    <li>Lower the collection arm and attach the token.</li>
+    <li>Transport and release the token.</li>
+  </ol>
+
+  <h2>Results</h2>
+
+  <ul>
+    <li>Demonstrated PS4-controlled robot navigation in Gazebo.</li>
+    <li>Simulated arm movement and magnetic token attachment.</li>
+    <li>Successfully tested token pickup, transportation, and release.</li>
+    <li>Implemented robot and token odometry tracking.</li>
+    <li>Tested autonomous target selection and navigation commands.</li>
+    <li>
+      Used common ROS interfaces for teleoperation and autonomous control.
+    </li>
+    <li>
+      Demonstrated physical robot motor control using ROS
+      <code>/cmd_vel</code> commands.
+    </li>
+  </ul>
+
+  <!-- Replace the filename with your converted MP4 video -->
+  <figure>
+    <video
+      controls
+      muted
+      playsinline
+      preload="metadata"
+      style="display: block; width: 100%; max-width: 850px; height: auto; margin: auto;"
+    >
+      <source src="assets/vid-1-token-collection.mp4" type="video/mp4">
+      Your browser does not support embedded video.
+    </video>
+
+    <figcaption style="text-align: center;">
+      Video 1. PS4-controlled token pickup, transportation, and release in Gazebo.
+    </figcaption>
+  </figure>
+
+  <h2>Current Status and Future Work</h2>
+
+  <p>
+    The project established a working foundation for autonomous control and
+    validated the core behaviors in Gazebo. Future development will focus on
+    improving navigation and pickup reliability, expanding the simulation to
+    multiple robots and tokens, and deploying the complete autonomy pipeline
+    on the physical RoboGame arena.
+  </p>
+
+</section>
